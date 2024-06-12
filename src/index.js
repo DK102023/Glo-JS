@@ -8,7 +8,7 @@ import mobileMenuDriver from "./modules/mobile-menu";
 import anchorScroll from "./modules/anchor-scrolll";
 import modalCalls from "./modules/modal-calls";
 import carousel from "./modules/carousel";
-import forms from "./modules/forms";
+
 
 
 mobileMenuDriver()
