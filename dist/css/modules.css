@@ -1,0 +1,74 @@
+.row.services-carousel {
+    display: flex;
+    overflow: hidden;
+}
+
+.services-carousel .col-sm-6,
+.services-carousel .col-md-4 {
+    min-width: calc(100% / 3); /* Показывать по 3 элемента на десктопе */
+    flex-shrink: 0;
+    justify-content: center; /* Центрируем содержимое горизонтально */
+    align-items: center; /* Центрируем содержимое вертикально */
+}
+
+@media (max-width: 768px) {
+    .services-carousel .col-sm-6,
+    .services-carousel .col-md-4 {
+        min-width: calc(100% / 2); /* Показывать по 2 элемента на планшетах */
+    }
+}
+
+@media (max-width: 540px) {
+    .services-carousel .col-sm-6,
+    .services-carousel .col-md-4 {
+        box-sizing: border-box;
+        padding: 0 4%;
+        max-width: calc(100% / 17);
+
+    }
+
+
+
+@media (max-width: 480px) {
+    .services-carousel .col-sm-6,
+    .services-carousel .col-md-4 {
+        /*min-width: calc(100% / 3);
+        flex-shrink: 0;*/
+        box-sizing: border-box;
+        padding: 0 4%;
+       min-width: 100%; /* Показывать по 1 элементу на мобильных */
+
+    }
+    .services-section .element {
+        max-width:calc(100% / 3);;
+        margin-bottom: 20px;
+    }
+}
+
+
+@media (max-width: 414px) {
+    .element.relative {
+        /*width: 60%; /* Уменьшаем элемент до 60% ширины экрана */
+        max-width: calc(100% / 0);
+    }
+}
+
+@media (max-width: 325px) {
+    .element.relative {
+      /*  width: 70%; /* Уменьшаем элемент до 70% ширины экрана */
+        max-width: calc(100% / 0);
+    }
+}
+
+
+
+
+.services-arrow {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.services-arrow img {
+    cursor: pointer;
+}}

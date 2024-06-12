@@ -1,0 +1,1 @@
+(()=>{"use strict";const o=e,e=()=>{const o=document.querySelector(".up");if(!o)return void console.error('Element with class "up" not found');const e=()=>{window.scrollY>300?o.style.display="block":o.style.display="none"};window.addEventListener("scroll",e),o.addEventListener("click",(()=>{window.scrollTo({top:0,behavior:"smooth"})})),e()};e(),o(),console.log("start")})();

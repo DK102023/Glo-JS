@@ -1,0 +1,34 @@
+.row.services-carousel {
+    display: none;
+    overflow: hidden;
+}
+
+.services-carousel .col-sm-6,
+.services-carousel .col-md-4 {
+    min-width: calc(100% / 3); /* Показывать по 3 элемента на десктопе */
+    flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+    .services-carousel .col-sm-6,
+    .services-carousel .col-md-4 {
+        min-width: calc(100% / 2); /* Показывать по 2 элемента на планшетах */
+    }
+}
+
+@media (max-width: 480px) {
+    .services-carousel .col-sm-6,
+    .services-carousel .col-md-4 {
+        min-width: 100%; /* Показывать по 1 элементу на мобильных */
+    }
+}
+
+.services-arrow {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.services-arrow img {
+    cursor: pointer;
+}
