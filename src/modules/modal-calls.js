@@ -120,6 +120,8 @@ const modalCalls = ()=> {
                    // console.log(data);
                     if (form === invoiceForm) {
                         closeForm(invoiceForm);
+                    } else if (form === feedbackForm){
+                        closeForm(feedbackForm)
                     }
                 })
                 .catch((error) => {
@@ -139,7 +141,7 @@ const modalCalls = ()=> {
 
     feedbackForm.addEventListener('submit', (event) => {
         handleFormSubmit(event, feedbackForm, [
-            { element: feedBackFioField, regexp: nameRegExp, required: true },
+            { element: feedBackFioField, regexp: nameRegExp },
             { element: feedBackPhoneField, regexp: phoneRegExp, length: phoneLength, required: true },
             { element: feedBackMessageField, regexp: /.+/, required: true } // простая проверка на непустое сообщение
         ]);
@@ -148,7 +150,8 @@ const modalCalls = ()=> {
     invoiceForm.addEventListener('submit', (event) => {
         handleFormSubmit(event, invoiceForm, [
             { element: invoiceFioField, regexp: nameRegExp, required: true },
-            { element: invoicePhoneField, regexp: phoneRegExp, length: phoneLength, required: true }
+            { element: invoicePhoneField, regexp: phoneRegExp, length: phoneLength, required: true },
+            { element:  invoiceLine,  regexp: /.+/}
         ]);
     });
 
