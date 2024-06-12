@@ -1,5 +1,5 @@
 import { fadeIn, fadeOut } from '../utils/animators';
-import { phoneRegExp, nameRegExp, checkField } from '../utils/check-data-field'
+import { phoneRegExp, nameRegExp,validateField } from '../utils/check-data-field'
 import {sendFormData} from "../utils/mailer";
 
 const modalCalls = ()=> {
@@ -10,16 +10,15 @@ const modalCalls = ()=> {
     const callBackCloseBtn = callbackForm.querySelector('.modal-close');
     const callBackFioField = callbackForm.querySelector('input[name="fio"]');
     const callBackPhoneField = callbackForm.querySelector('input[name="tel"]');
-    const callBackSubmitButton = callbackForm.querySelector(' input.button.btn.feedback');
-    //callBackSubmitButton.style.color = 'red'
+
+
 
     //Форма обратной связи
     const feedbackForm = document.getElementById('feedback');
     const feedBackFioField = feedbackForm.querySelector('input[name="fio"]');
     const feedBackPhoneField = feedbackForm.querySelector('input[name="tel"]');
     const feedBackMessageField = feedbackForm.querySelector('textarea[name="message"]');
-    //console.log(feedBackMessageField)
-    const feedBackSubmitButton = feedbackForm.querySelector(' input.button.btn.feedback');
+
 
 
     //Форма заявки
@@ -27,7 +26,7 @@ const modalCalls = ()=> {
     const invoiceLine = invoiceForm.querySelector('#applicationInput');
     const invoiceFioField = invoiceForm.querySelector('input[name="fio"]');
     const invoicePhoneField = invoiceForm.querySelector('input[name="tel"]');
-    const invoiceSubmitButton = invoiceForm.querySelector(' input.button.btn.feedback');
+
 
     //Окно сообщения об отправке
     const responseMessage = document.getElementById('responseMessage');
@@ -97,160 +96,63 @@ const modalCalls = ()=> {
     }
 
     //Обработчики нажатия кнопок форм
-
-    callbackForm.addEventListener('submit', function (event) {
+    // Универсальная функция для обработки форм
+    function handleFormSubmit(event, form, fields) {
         event.preventDefault();
-        let fieldErrorFlag = false
-        // if ((callBackFioField.value == 0) || (checkField(callBackFioField.value, nameRegExp) === false)){
-        if (checkField(callBackFioField.value, nameRegExp, false) === false) {
-            callBackFioField.classList.add('error')
-            fieldErrorFlag = false
-            return
-        } else {
-            callBackFioField.classList.remove('error')
-            fieldErrorFlag = true
+        let isValid = true;
+        let formData = {};
 
-        }
-        if ((callBackPhoneField.value.length !== phoneLength) || (checkField(callBackPhoneField.value, phoneRegExp) === false)) {
+        // Проверка всех полей
+        fields.forEach(field => {
+            const { element, regexp, length, required } = field;
+            const valid = validateField(element, regexp, length, required);
+            if (!valid) {
+                isValid = false;
+            }
+            formData[element.name] = element.value;
+        });
 
-            callBackPhoneField.classList.add('error')
-            fieldErrorFlag = false
-            return;
-        } else {
-            callBackPhoneField.classList.remove('error')
-            fieldErrorFlag = true
-
-        }
-        if (fieldErrorFlag) {
-                const formData = {
-                fio: callBackFioField.value,
-                tel: callBackPhoneField.value
-            };
-            // Отправка данных формы
+        // Отправка формы, если все поля валидны
+        if (isValid) {
             sendFormData(formData)
                 .then((data) => {
-                    showMessage(callbackForm, 'Отправлено!', 'success');
-                    console.log(data);
-                })
-                .catch((error) => {
-                    showMessage(callbackForm, 'Ошибка отправки!', 'error');
-                    console.error(error);
-                });
-        } else {
-            return;
-        }
-
-    });
-
-    feedbackForm.addEventListener('submit', function(event){
-        event.preventDefault();
-        let fieldErrorFlag = false
-        if  (checkField(feedBackFioField.value, nameRegExp ,false) === false){
-            feedBackFioField.classList.add('error')
-            fieldErrorFlag = false
-
-        }
-        else {
-            feedBackFioField.classList.remove('error')
-            fieldErrorFlag = true
-
-        }
-        if ((feedBackPhoneField.value.length !==phoneLength) || (checkField(feedBackPhoneField.value, phoneRegExp) === false)){
-
-            feedBackPhoneField.classList.add('error')
-            fieldErrorFlag = false
-
-        }
-        else {
-            feedBackPhoneField.classList.remove('error')
-            fieldErrorFlag = true
-
-        }
-
-        if (feedBackMessageField.value.trim() !== ""){
-            feedBackMessageField.classList.remove('error')
-            fieldErrorFlag = true
-        } else {
-            feedBackMessageField.classList.add('error')
-            fieldErrorFlag=false
-        }
-
-        if(fieldErrorFlag){
-            const formData = {
-                fio: feedBackFioField.value,
-                tel: feedBackPhoneField.value,
-                message: feedBackMessageField.value
-            };
-            // Отправка данных формы
-            sendFormData(formData)
-                .then((data) => {
-                    showMessage(feedbackForm, 'Отправлено!', 'success');
+                    showMessage(form, 'Отправлено!', 'success');
                    // console.log(data);
-                    closeForm(invoiceForm);
+                    if (form === invoiceForm) {
+                        closeForm(invoiceForm);
+                    }
                 })
                 .catch((error) => {
-                    showMessage(feedbackForm, 'Ошибка отправки!', 'error');
-                  //  console.error(error);
+                    showMessage(form, 'Ошибка отправки!', 'error');
+                   // console.error(error);
                 });
-
-        } else {
-            return
         }
+    }
 
+// Обработчики для каждой формы
+    callbackForm.addEventListener('submit', (event) => {
+        handleFormSubmit(event, callbackForm, [
+            { element: callBackFioField, regexp: nameRegExp, required: true },
+            { element: callBackPhoneField, regexp: phoneRegExp, length: phoneLength, required: true }
+        ]);
     });
 
-
-    invoiceForm.addEventListener('submit', function (event) {
-        event.preventDefault();
-        let fieldErrorFlag = false
-
-        if (checkField(invoiceFioField.value, nameRegExp) === false) {
-            invoiceFioField.classList.add('error')
-            fieldErrorFlag = false
-
-        } else {
-            invoiceFioField.classList.remove('error')
-            fieldErrorFlag = true
-
-        }
-
-        if ((invoicePhoneField.value.length !== phoneLength) || (checkField(invoicePhoneField.value, phoneRegExp) === false)) {
-
-            invoicePhoneField.classList.add('error')
-            fieldErrorFlag = false
-
-        } else {
-            invoicePhoneField.classList.remove('error')
-            fieldErrorFlag = true
-
-        }
-        if (fieldErrorFlag) {
-            //Отправка формы
-            //console.log('Отправка формы')
-            const formData = {
-                fio: invoiceFioField.value,
-                tel: invoicePhoneField.value,
-                invoice: invoiceLine.value
-            };
-            // Отправка данных формы
-            sendFormData(formData)
-                .then((data) => {
-                    showMessage(invoiceForm, 'Отправлено!', 'success');
-                   // console.log(data);
-                    closeForm(invoiceForm);
-                })
-                .catch((error) => {
-                    showMessage(invoiceForm, 'Ошибка отправки!', 'error');
-                  //  console.error(error);
-                    //closeForm(invoiceForm);
-                });
-
-        } else {
-            return
-        }
-
+    feedbackForm.addEventListener('submit', (event) => {
+        handleFormSubmit(event, feedbackForm, [
+            { element: feedBackFioField, regexp: nameRegExp, required: true },
+            { element: feedBackPhoneField, regexp: phoneRegExp, length: phoneLength, required: true },
+            { element: feedBackMessageField, regexp: /.+/, required: true } // простая проверка на непустое сообщение
+        ]);
     });
 
+    invoiceForm.addEventListener('submit', (event) => {
+        handleFormSubmit(event, invoiceForm, [
+            { element: invoiceFioField, regexp: nameRegExp, required: true },
+            { element: invoicePhoneField, regexp: phoneRegExp, length: phoneLength, required: true }
+        ]);
+    });
+
+ // -----
     function showMessage(form, message, type) {
         const messageElement = document.createElement('div');
         messageElement.textContent = message;
@@ -263,11 +165,11 @@ const modalCalls = ()=> {
             messageElement.remove();
         }, 3000); // удаляем сообщение через 3 секунды
     }
-function closeForm(forma){
-    setTimeout(() => {
-       forma.style.display='';
-    }, 3300); // удаляем сообщение через 3 секунды
-}
+    function closeForm(forma){
+        setTimeout(() => {
+            forma.style.display='';
+        }, 3300); // удаляем сообщение через 3 секунды
+    }
 
 }
 

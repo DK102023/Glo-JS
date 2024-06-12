@@ -14,3 +14,21 @@ export function checkField(fieldData , regExpVal, fieldRequired = true){
 
 
 }
+
+// Универсальная функция для проверки полей формы
+export function validateField(field, regexp, length, required) {
+    const value = field.value.trim();
+
+    if (!required && value === '') {
+        field.classList.remove('error');
+        return true;
+    }
+
+    if ((length && value.length !== length) || !regexp.test(value)) {
+        field.classList.add('error');
+        return false;
+    } else {
+        field.classList.remove('error');
+        return true;
+    }
+}
