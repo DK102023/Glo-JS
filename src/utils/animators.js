@@ -15,7 +15,7 @@ export const fadeIn = (element) => {
 };
 
 export const fadeOut = (element) => {
-    console.log('fadeOut for ', element)
+   // console.log('fadeOut for ', element)
     let opacity = 1;
     const interval = 10;
     const duration = 500;
