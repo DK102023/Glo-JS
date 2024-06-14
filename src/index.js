@@ -19,5 +19,5 @@ scrollTopModule();
 accordeonModule('.accordeon');
 counter([10,20,'10 лет','<30'])
 modalCalls()
-forms()
+
 
