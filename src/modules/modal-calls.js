@@ -64,8 +64,8 @@ const modalCalls = ()=> {
 
     if (invoiceButton.length > 0) {
 
-       // formShow(invoiceButton, invoiceForm);
-        formShow(invoiceButton, callbackForm, overlay);
+        formShow(invoiceButton, invoiceForm);
+        //formShow(invoiceButton, callbackForm, overlay);
 
 
 
@@ -75,8 +75,8 @@ const modalCalls = ()=> {
     if (feedbackButton.length > 0) {
         /*
         fadeOut(invoiceForm)*/
-       // formShow(feedbackButton, feedbackForm);
-        formShow(feedbackButton, callbackForm, overlay);
+        formShow(feedbackButton, feedbackForm);
+       // formShow(feedbackButton, callbackForm, overlay);
 
 
 
