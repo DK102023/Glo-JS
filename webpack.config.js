@@ -21,6 +21,14 @@ module.exports = {
             }
         ]
     },
+    devtool: 'source-map', // source-maps
+    devServer: {
+        hot: true,
+        static: {
+            directory: path.resolve(__dirname, 'dist'),
+            watch: true
+        }
+    },
     devServer: {
         hot: true,
         static: {
