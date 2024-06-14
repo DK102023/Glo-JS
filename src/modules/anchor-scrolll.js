@@ -1,4 +1,6 @@
+
 const anchorScroll = () =>{
+    const closeButton = document.querySelector('.mobile-menu').querySelector('.mobile-menu-close')
     document.addEventListener('DOMContentLoaded', () => {
         // Находим все якорные ссылки
         const anchorLinks = document.querySelectorAll('a[href^="#"]');
@@ -8,7 +10,8 @@ const anchorScroll = () =>{
             link.addEventListener('click', function(e) {
                 // Отменяем стандартное поведение ссылки
                 e.preventDefault();
-
+                //Имитируем клик на кнопку модального меню
+                closeButton.click();
                 // Получаем ID целевого элемента из атрибута href ссылки
                 const targetId = this.getAttribute('href').substring(1);
 
