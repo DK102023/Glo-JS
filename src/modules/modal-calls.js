@@ -5,9 +5,11 @@ import {sendFormData} from "../utils/mailer";
 const modalCalls = ()=> {
     const overlay = document.querySelector('.modal-overlay');
 
+    const callBackCloseBtn = document.querySelectorAll('.modal-close');
+
     //Форма заказа обратногозвонка
     const callbackForm = document.getElementById('callback');
-    const callBackCloseBtn = callbackForm.querySelector('.modal-close');
+    //const callBackCloseBtn = callbackForm.querySelector('.modal-close');
     const callBackFioField = callbackForm.querySelector('input[name="fio"]');
     const callBackPhoneField = callbackForm.querySelector('input[name="tel"]');
 
@@ -64,7 +66,7 @@ const modalCalls = ()=> {
 
     if (invoiceButton.length > 0) {
 
-        formShow(invoiceButton, invoiceForm);
+        formShow(invoiceButton, invoiceForm, overlay);
         //formShow(invoiceButton, callbackForm, overlay);
 
 
@@ -75,7 +77,7 @@ const modalCalls = ()=> {
     if (feedbackButton.length > 0) {
         /*
         fadeOut(invoiceForm)*/
-        formShow(feedbackButton, feedbackForm);
+        formShow(feedbackButton, feedbackForm, overlay);
        // formShow(feedbackButton, callbackForm, overlay);
 
 
@@ -87,16 +89,38 @@ const modalCalls = ()=> {
         formShow(callbackBtn, callbackForm, overlay);
     }
 
-    callBackCloseBtn.addEventListener('click', () => {
-        callbackClose()
+
+    callBackCloseBtn.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // Вызов функций при нажатии на кнопку
+            formClose(callbackForm, 100)
+            formClose(feedbackForm, 100)
+            formClose(invoiceForm, 100)
+        });
     });
+
+    //callBackCloseBtn.addEventListener('click', () => {
+        //callbackClose()
+      //  formClose(callbackForm, 100)
+  //  });
     overlay.addEventListener('click', () => {
-        callbackClose()
+        //callbackClose()
+        formClose(callbackForm, 100)
+        formClose(feedbackForm, 100)
+        formClose(invoiceForm, 100)
     })
 
-    function callbackClose() {
+  /*  function callbackClose() {
         fadeOut(overlay);
         fadeOut(callbackForm)
+    }*/
+
+    function formClose(form, timeClose) {
+        setTimeout(() => {
+            fadeOut(overlay);
+            fadeOut(form)
+        }, timeClose);
+
     }
 
     //Обработчики нажатия кнопок форм
@@ -123,9 +147,13 @@ const modalCalls = ()=> {
                     showMessage(form, 'Отправлено!', 'success');
                    // console.log(data);
                     if (form === invoiceForm) {
-                        closeForm(invoiceForm);
+                        //closeForm(invoiceForm);
+                        formClose(invoiceForm,500)
                     } else if (form === feedbackForm){
-                        closeForm(feedbackForm)
+                       // closeForm(feedbackForm)
+                        formClose(feedbackForm,500)
+                    } else if (form === callbackForm){
+                        formClose(callbackForm,500)
                     }
                 })
                 .catch((error) => {
@@ -172,11 +200,11 @@ const modalCalls = ()=> {
             messageElement.remove();
         }, 3000); // удаляем сообщение через 3 секунды
     }
-    function closeForm(forma){
+   /* function closeForm(forma){
         setTimeout(() => {
             forma.style.display='';
-        }, 3300); // удаляем сообщение через 3 секунды
-    }
+        }, 3300);
+    }*/
 
 }
 

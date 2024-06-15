@@ -11,6 +11,19 @@
     align-items: center; /* Центрируем содержимое вертикально */
 }
 
+
+.modal {
+    position: fixed;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 460px;
+    max-width: 100%;
+    background: #fff;
+    padding: 55px 25px 35px;
+    z-index: 99;
+}
+
 @media (max-width: 768px) {
     .services-carousel .col-sm-6,
     .services-carousel .col-md-4 {
