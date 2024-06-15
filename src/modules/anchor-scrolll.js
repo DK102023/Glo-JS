@@ -17,6 +17,15 @@ const anchorScroll = () =>{
 
                 // Находим целевой элемент на странице
                 const targetElement = document.getElementById(targetId);
+                if (!targetElement) {
+                    //location.href = location.href;
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                    return;
+                }
+
 
                 // Вычисляем позицию прокрутки до целевого элемента
                 const offsetTop = targetElement.offsetTop;

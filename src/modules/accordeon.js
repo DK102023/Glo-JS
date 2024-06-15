@@ -8,7 +8,7 @@ const accordeonModule = (blockClass)=>{
        // console.log(e.target)
         if (clickedElement.classList.contains('element') ){
 
-            console.dir ('click on element:  ' + clickedElement.classList )
+            //console.dir ('click on element:  ' + clickedElement.classList )
             const accordionBlockButton = clickedElement.querySelector('.element-content')
             const elementContents = accordeon.querySelectorAll('.element-content');
             const blockElements = accordeon.querySelectorAll('.element');
